@@ -4,7 +4,7 @@
   "width": 800,
   "height": 600,
   "data": {
-    "url": "https://github.com/edbagas/data-visualisation-2/raw/main/data/custom.geo%20(3)%20(1).json",
+    "url": "https://raw.githubusercontent.com/edbagas/data-visualisation-2/main/data/custom.geo%20(3)%20(1).json?token=ATFZ7U3CHI3DKIDSENKIVNTBOGULG",
     "format": {"type": "topojson", "feature": "custom.geo (3)"}
   },
   "transform": [
@@ -12,7 +12,7 @@
       "lookup": "properties.name",
       "from": {
         "data": {
-          "url": "https://github.com/edbagas/data-visualisation-2/raw/main/data/gapminder_internet.csv"
+          "url": "https://raw.githubusercontent.com/edbagas/data-visualisation-2/main/data/gapminder_internet.csv?token=ATFZ7U5742BQDGEZNKCWDLDBOGUKW"
         },
         "key": "country",
         "fields": ["internetuserate"]

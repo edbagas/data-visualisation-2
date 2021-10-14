@@ -4,7 +4,7 @@
     "height": 400,
     "title": "Global Internet Usage Rate per 100 people",
     "data": {
-        "url": "https://github.com/edbagas/data-visualisation-2/raw/main/data/gapminder_internet.csv"
+        "url": "https://raw.githubusercontent.com/edbagas/data-visualisation-2/main/data/gapminder_internet.csv?token=ATFZ7U5742BQDGEZNKCWDLDBOGUKW"
     },
     "transform": [
         {"filter": "datum.incomeperperson > 0"},
