@@ -23,7 +23,23 @@
       "as": "Internet Usage Rate per 100"
     }
   ],
-  "projection": { "type": "equirectangular" },
+  "params": [
+    {
+      "name": "zoom_level",
+      "value": "150",
+      "bind": {
+        "input": "range",
+        "min": 100,
+        "max": 500,
+        "step": 1,
+        "name": "Zoom: "
+      }
+    }
+  ],
+  "projection": {
+    "type": "equirectangular",
+    "scale": { "expr": "zoom_level" }
+  },
   "layer": [
     {
       "transform": [
