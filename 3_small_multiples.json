@@ -1,14 +1,22 @@
 {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "repeat": ["Economy", "Family", "Health", "Freedom","Generosity","Corruption"],
+    "repeat": 
+       ["Population", "Score", "Value"],  
     "columns": 3,
     "spec": {
-      "data": {"url": "https://raw.githubusercontent.com/PhilippeCodes/World-Happiness-Report-Data-Analysis/master/World%20Happiness%20Report.csv"},
-      "mark": "bar",
+      "data": {"url": "https://raw.githubusercontent.com/edbagas/data-visualisation-2/main/data/internet_population_happiness_gdp.csv"},
+      "transform": [
+        {"filter":"datum.Population > 0"}
+      ],
+      "mark": "circle",
       "encoding": {
-        "x": {"field": {"repeat": "repeat"}, "bin": true},
-        "y": {"aggregate": "count"},
-        "color": {"field": "Region","scale":{"scheme":"plasma"}}
+        "x": {"field": {"repeat": "repeat"}, "type": "quantitative"},
+        "y": {
+          "field": "internetuserate",
+          "type": "quantitative"
+        },
+        "color":{"field":"continent"},
+        "size":{"field":"urbanrate"}
       }
-    }
-  }
+    }     
+}
