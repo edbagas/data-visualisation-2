@@ -4,7 +4,7 @@
     "height": 400,
     "title": "Global Internet Usage Rate per 100 people",
     "data": {
-        "url": "https://raw.githubusercontent.com/edbagas/data-visualisation-2/main/data/gapminder_internet.csv"
+        "url": "https://raw.githubusercontent.com/edbagas/data-visualisation-2/main/data/internet_population_happiness_gdp.csv"
     },
     "transform": [
         {"filter": "datum.incomeperperson > 0"},
@@ -68,9 +68,14 @@
         "mark": "circle",
         "encoding": {
             "color": {
+                "field": "continent",
+                "type": "nominal",
+                "title": "Continent"
+            },
+            "size":{
                 "field": "urbanrate",
                 "type": "quantitative",
-                "title": "Urban Rate"
+                "title":"Urban Rate"
             },
             "tooltip": [
                 {"field":"country", "title":"Country", "type": "nominal"},
