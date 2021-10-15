@@ -1,32 +1,59 @@
 {
-    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "repeat": 
-       ["Population", "Score", "Value"],  
-    "columns": 3,
-    "spec": {
-      "data": {"url": "https://raw.githubusercontent.com/edbagas/data-visualisation-2/main/data/internet_population_happiness_gdp.csv"},
-      "transform": [
-        {"filter":"datum.Population > 0"}
-      ],
-      "mark": "circle",
-      "encoding": {
-        "x": {"field": {"repeat": "repeat"}, "type": "quantitative"},
-        "y": {
-          "field": "internetuserate",
-          "type": "quantitative"
-        },
-        "color":{"field":"continent"},
-        "size": {
-            "field": "urbanrate",
-            "type": "quantitative",
-            "title": "Urban Rate",
-            "scale": {
-                "type": "threshold",
-                "domain": [20, 40, 60, 80],
-                "range": [0, 100]
-            },
-            "legend": {"format": ".1s"}
-        }
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "repeat": ["Population", "Score", "Value"],
+  "columns": 3,
+  "spec": {
+    "data": {
+      "url": "https://raw.githubusercontent.com/edbagas/data-visualisation-2/main/data/internet_population_happiness_gdp.csv"
+    },
+    "transform": [{ "filter": "datum.Population > 0" }],
+    "params": [
+      {
+        "name": "continent_highlight",
+        "select": { "type": "point", "fields": ["continent"] },
+        "bind": "legend"
       }
-    }     
+    ],
+    "mark": "circle",
+    "encoding": {
+      "x": {
+        "field": "internetuserate",
+        "type": "quantitative",
+        "title": "Internet Users Rate (per 100 people)",
+        "bin": true
+      },
+      "y": {
+        "field": { "repeat": "repeat" },
+        "type": "quantitative"
+      },
+      "opacity": {
+        "condition": { "param": "continent_highlight", "value": 0.6 },
+        "value": 0.2
+      },
+      "color": { "field": "continent" },
+      "size": {
+        "field": "urbanrate",
+        "type": "quantitative",
+        "title": "Urban Rate",
+        "legend": { "format": ".1s" }
+      },
+      "tooltip": [
+        { "field": "continent", "title": "Continent", "type": "nominal" },
+        { "field": "country", "title": "Country", "type": "nominal" },
+        { "field": "Population", "title": "Population", "type": "nominal" },
+        {
+          "field": "internetuserate",
+          "title": "Internet Users (per 100 people)",
+          "type": "quantitative",
+          "format": ","
+        },
+        {
+          "field": "urbanrate",
+          "title": "Urban Rate",
+          "type": "quantitative",
+          "format": ","
+        }
+      ]
+    }
+  }
 }

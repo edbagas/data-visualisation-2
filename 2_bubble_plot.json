@@ -1,116 +1,185 @@
 {
-    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "width": 500,
-    "height": 400,
-    "title": "Global Internet Usage Rate per 100 people",
-    "data": {
-        "url": "https://raw.githubusercontent.com/edbagas/data-visualisation-2/main/data/internet_population_happiness_gdp.csv"
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 500,
+  "height": 400,
+  "title": "Global Internet Usage Rate per 100 people",
+  "data": {
+    "url": "https://raw.githubusercontent.com/edbagas/data-visualisation-2/main/data/internet_population_happiness_gdp.csv"
+  },
+  "transform": [
+    { "filter": "datum.incomeperperson > 0" },
+    { "filter": "datum.internetuserate > 0" },
+    { "filter": "datum.urbanrate > 0" },
+    { "filter": "datum.incomeperperson > income_above" },
+    { "filter": "datum.internetuserate > internet_above" },
+    { "filter": "datum.urbanrate > urbanrate_above" },
+    {
+      "filter": "continent_selection == null || datum.continent == continent_selection"
+    }
+  ],
+  "params": [
+    {
+      "name": "continent_selection",
+      "bind": {
+        "input": "select",
+        "options": [
+          null,
+          "Africa",
+          "Asia",
+          "Europe",
+          "North America",
+          "Oceania",
+          "South America"
+        ],
+        "labels": [
+          "Show All",
+          "Africa",
+          "Asia",
+          "Europe",
+          "North America",
+          "Oceania",
+          "South America"
+        ],
+        "name": "Continent Selection:"
+      }
     },
-    "transform": [
-        {"filter": "datum.incomeperperson > 0"},
-        {"filter": "datum.internetuserate > 0"},
-        {"filter": "datum.urbanrate > 0"},
-        {"filter": "datum.incomeperperson > income_above"},
-        {"filter": "datum.internetuserate > internet_above"},
-        {"filter": "datum.urbanrate > urbanrate_above"}
-    ],
-    "params":[
+    {
+      "name": "income_above",
+      "value": 0,
+      "bind": {
+        "input": "range",
+        "min": 1,
+        "max": 80000,
+        "step": 1000,
+        "name": "Minimum Income: "
+      }
+    },
+    {
+      "name": "internet_above",
+      "value": 0,
+      "bind": {
+        "input": "range",
+        "min": 1,
+        "max": 100,
+        "step": 1,
+        "name": "Minimum Internet Users: "
+      }
+    },
+    {
+      "name": "urbanrate_above",
+      "value": 0,
+      "bind": {
+        "input": "range",
+        "min": 1,
+        "max": 100,
+        "step": 1,
+        "name": "Minimum Urban Rate: "
+      }
+    }
+  ],
+  "encoding": {
+    "x": {
+      "field": "incomeperperson",
+      "type": "quantitative",
+      "title": "Income (per person)"
+    },
+    "y": {
+      "field": "internetuserate",
+      "type": "quantitative",
+      "title": "Internet Users Rate (per 100 people)"
+    }
+  },
+  "layer": [
+    {
+      "params": [
         {
-            "name": "income_above",
-            "value":0,
-            "bind":{
-                "input": "range",
-                "min": 1,
-                "max": 80000,
-                "step": 1000,
-                "name": "Minimum Income: "
-            }
-        },
-        {
-            "name": "internet_above",
-            "value":0,
-            "bind":{
-                "input": "range",
-                "min": 1,
-                "max": 100,
-                "step": 1,
-                "name": "Minimum Internet Users: "
-            }
-        },
-        {
-            "name": "urbanrate_above",
-            "value":0,
-            "bind":{
-                "input": "range",
-                "min": 1,
-                "max": 100,
-                "step": 1,
-                "name": "Minimum Urban Rate: "
-            }
+          "name": "continent_highlight",
+          "select": { "type": "point", "fields": ["continent"] },
+          "bind": "legend"
         }
-    ],
-    "encoding": {
-        "x": {
-            "field": "internetuserate",
-            "type": "quantitative",
-            "title": "Internet Users (per 100 people)",
-            "axis": {"tickCount":7}
+      ],
+      "mark": "circle",
+      "encoding": {
+        "color": {
+          "field": "continent",
+          "type": "nominal",
+          "title": "Continent"
         },
-        "y": {
+        "opacity": {
+          "condition": { "param": "continent_highlight", "value": 0.6 },
+          "value": 0.2
+        },
+        "size": {
+          "field": "urbanrate",
+          "type": "quantitative",
+          "title": "Urban Rate"
+        },
+        "tooltip": [
+          { "field": "continent", "title": "Continent", "type": "nominal" },
+          { "field": "country", "title": "Country", "type": "nominal" },
+          {
             "field": "incomeperperson",
-            "type": "quantitative",
             "title": "Income (per person)",
-            "axis": {"tickCount":7}
-        }
+            "type": "quantitative",
+            "format": ","
+          },
+          {
+            "field": "internetuserate",
+            "title": "Internet Users (per 100 people)",
+            "type": "quantitative",
+            "format": ","
+          },
+          {
+            "field": "urbanrate",
+            "title": "Urban Rate",
+            "type": "quantitative",
+            "format": ","
+          }
+        ]
+      }
     },
-    "layer": [
-        {
-        "mark": "circle",
-        "encoding": {
-            "color": {
-                "field": "continent",
-                "type": "nominal",
-                "title": "Continent"
-            },
-            "size":{
-                "field": "urbanrate",
-                "type": "quantitative",
-                "title":"Urban Rate"
-            },
-            "tooltip": [
-                {"field":"country", "title":"Country", "type": "nominal"},
-                {"field":"incomeperperson", "title":"Income (per person)", "type": "quantitative", "format":","},
-                {"field":"internetuserate", "title":"Internet Users (per 100 people)", "type": "quantitative", "format":","},
-                {"field":"urbanrate", "title":"Urban Rate", "type": "quantitative", "format":","}
-            ]
-            }
+    {
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "baseline": "middle",
+        "dx": -12,
+        "fontSize": 11.5,
+        "fontStyle": "italic"
+      },
+      "encoding": {
+        "text": { "field": "country", "type": "nominal" },
+        "color": { "value": "black" },
+        "opacity": {
+          "condition": {
+            "test": "datum['country'] == 'Liechtenstein' || datum['country'] == 'Bermuda' || datum['country'] == 'Iceland' || datum['country'] == 'Luxembourg' || datum['country'] == 'Norway' || datum['country'] == 'Japan' || datum['country'] == 'Macao, China' || datum['country'] == 'Bahamas' || datum['country'] == 'Singapore' || datum['country'] == 'Austria'",
+            "value": 1
+          },
+          "value": 0
         },
-        {
-            "mark":{
-                "type": "text",
-                "align":"right",
-                "baseline":"middle",
-                "dx":-12,
-                "fontSize":11.5,
-                "fontStyle":"italic"
-            },
-            "encoding": {
-                "text": {"field":"country", "type": "nominal"},
-                "color":{"value":"black"},
-                "opacity":{
-                    "condition":{
-                        "test": "datum['country'] == 'Liechtenstein' || datum['country'] == 'Bermuda' || datum['country'] == 'Iceland' || datum['country'] == 'Luxembourg' || datum['country'] == 'Norway' || datum['country'] == 'Japan' || datum['country'] == 'Macao, China' || datum['country'] == 'Bahamas' || datum['country'] == 'Singapore' || datum['country'] == 'Austria'",
-                        "value": 1  
-                    },
-                    "value": 0
-                },
-                "tooltip": [
-                    {"field":"country", "title":"Country", "type": "nominal"},
-                    {"field":"incomeperperson", "title":"Income (per person)", "type": "quantitative", "format":","},
-                    {"field":"internetuserate", "title":"Internet Users (per 100 people)", "type": "quantitative", "format":","},
-                    {"field":"urbanrate", "title":"Urban Rate", "type": "quantitative", "format":","}
-                ]
-            }
-        }
-    ]
+        "tooltip": [
+          { "field": "continent", "title": "Continent", "type": "nominal" },
+          { "field": "country", "title": "Country", "type": "nominal" },
+          {
+            "field": "incomeperperson",
+            "title": "Income (per person)",
+            "type": "quantitative",
+            "format": ","
+          },
+          {
+            "field": "internetuserate",
+            "title": "Internet Users (per 100 people)",
+            "type": "quantitative",
+            "format": ","
+          },
+          {
+            "field": "urbanrate",
+            "title": "Urban Rate",
+            "type": "quantitative",
+            "format": ","
+          }
+        ]
+      }
+    }
+  ]
 }

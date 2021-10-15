@@ -5,7 +5,7 @@
   "height": 600,
   "data": {
     "url": "https://raw.githubusercontent.com/edbagas/data-visualisation-2/main/data/custom.geo%20(3)%20(1).json",
-    "format": {"type": "topojson", "feature": "custom.geo (3)"}
+    "format": { "type": "topojson", "feature": "custom.geo (3)" }
   },
   "transform": [
     {
@@ -18,20 +18,41 @@
         "fields": ["internetuserate"]
       }
     },
-    {"calculate": "datum.internetuserate", "as": "Internet Usage Rate per 100"}
+    {
+      "calculate": "datum.internetuserate",
+      "as": "Internet Usage Rate per 100"
+    }
   ],
-  "projection": {"type": "equirectangular"},
-  "mark": {"type": "geoshape"},
-  "encoding": {
-    "color": {
-      "field": "Internet Usage Rate per 100",
-      "type": "quantitative",
-      "scale": {"type": "band"}
+  "projection": { "type": "equirectangular" },
+  "layer": [
+    {
+      "transform": [
+        {
+          "calculate": "'Data is not available in ' + datum.properties.NAME",
+          "as": "note"
+        }
+      ],
+      "mark": { "type": "geoshape", "fill": "lightgray", "stroke": "white" },
+      "encoding": {
+        "tooltip": {
+          "field": "note"
+        }
+      }
     },
-    "tooltip": [
-      {"field": "properties.name", "type": "nominal", "title": "Country"},
-      {"field": "Internet Usage Rate per 100", "type": "quantitative"}
-    ]
-  },
+    {
+      "mark": { "type": "geoshape" },
+      "encoding": {
+        "color": {
+          "field": "Internet Usage Rate per 100",
+          "type": "quantitative",
+          "scale": { "type": "band" }
+        },
+        "tooltip": [
+          { "field": "properties.name", "type": "nominal", "title": "Country" },
+          { "field": "Internet Usage Rate per 100", "type": "quantitative" }
+        ]
+      }
+    }
+  ],
   "config": {}
 }
