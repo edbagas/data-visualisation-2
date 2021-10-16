@@ -1,186 +1,133 @@
 {
-    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "width": 500,
-    "height": 400,
-    "title": "Global Internet Usage Rate per 100 people",
-    "data": {
-      "url": "https://raw.githubusercontent.com/edbagas/data-visualisation-2/main/data/internet_population_happiness_gdp.csv"
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {
+    "url": "https://raw.githubusercontent.com/edbagas/data-visualisation-2/main/data/internet_energy.csv"
+  },
+  "transform": [
+    {
+      "calculate": "datum.nonrenewable_energy",
+      "as": "other_energy"
     },
-    "transform": [
-      { "filter": "datum.incomeperperson > 0" },
-      { "filter": "datum.internetuserate > 0" },
-      { "filter": "datum.urbanrate > 0" },
-      { "filter": "datum.incomeperperson > income_above" },
-      { "filter": "datum.internetuserate > internet_above" },
-      { "filter": "datum.urbanrate > urbanrate_above" },
-      {
-        "filter": "continent_selection == null || datum.continent == continent_selection"
-      }
-    ],
-    "params": [
-      {
-        "name": "continent_selection",
-        "bind": {
-          "input": "select",
-          "options": [
-            null,
-            "Africa",
-            "Asia",
-            "Europe",
-            "North America",
-            "Oceania",
-            "South America"
-          ],
-          "labels": [
-            "Show All",
-            "Africa",
-            "Asia",
-            "Europe",
-            "North America",
-            "Oceania",
-            "South America"
-          ],
-          "name": "Continent Selection: "
-        }
-      },
-      {
-        "name": "income_above",
-        "value": 0,
-        "bind": {
-          "input": "range",
-          "min": 1,
-          "max": 80000,
-          "step": 1000,
-          "name": "Minimum Income: "
-        }
-      },
-      {
-        "name": "internet_above",
-        "value": 0,
-        "bind": {
-          "input": "range",
-          "min": 1,
-          "max": 100,
-          "step": 1,
-          "name": "Minimum Internet Users: "
-        }
-      },
-      {
-        "name": "urbanrate_above",
-        "value": 0,
-        "bind": {
-          "input": "range",
-          "min": 1,
-          "max": 100,
-          "step": 1,
-          "name": "Minimum Urban Rate: "
-        }
-      }
-    ],
-    "encoding": {
-      "x": {
-        "field": "incomeperperson",
-        "type": "quantitative",
-        "title": "Income (per person)"
-      },
-      "y": {
-        "field": "internetuserate",
-        "type": "quantitative",
-        "title": "Internet Users Rate (per 100 people)"
-      }
+    {
+      "fold": [
+        "hydro_energy",
+        "biofuel_energy",
+        "solar_energy",
+        "geothermal_energy",
+        "other_energy"
+      ]
     },
-    "layer": [
-      {
-        "params": [
-          {
-            "name": "continent_highlight",
-            "select": { "type": "point", "fields": ["continent"] },
-            "bind": "legend"
-          }
+    {
+      "filter": "continent_selection == null || datum.continent == continent_selection"
+    }
+  ],
+  "params": [
+    {
+      "name": "energy_highlight",
+      "select": { "type": "point", "fields": ["key"] },
+      "bind": "legend"
+    },
+    {
+      "name": "continent_selection",
+      "bind": {
+        "input": "select",
+        "options": [
+          null,
+          "Africa",
+          "Asia",
+          "Europe",
+          "North America",
+          "Oceania",
+          "South America"
         ],
-        "mark": "circle",
-        "encoding": {
-          "color": {
-            "field": "continent",
-            "type": "nominal",
-            "title": "Continent"
-          },
-          "opacity": {
-            "condition": { "param": "continent_highlight", "value": 0.6 },
-            "value": 0.2
-          },
-          "size": {
-            "field": "urbanrate",
-            "type": "quantitative",
-            "title": "Urban Rate"
-          },
-          "tooltip": [
-            { "field": "continent", "title": "Continent", "type": "nominal" },
-            { "field": "country", "title": "Country", "type": "nominal" },
-            {
-              "field": "incomeperperson",
-              "title": "Income (per person)",
-              "type": "quantitative",
-              "format": ","
-            },
-            {
-              "field": "internetuserate",
-              "title": "Internet Users (per 100 people)",
-              "type": "quantitative",
-              "format": ","
-            },
-            {
-              "field": "urbanrate",
-              "title": "Urban Rate",
-              "type": "quantitative",
-              "format": ","
-            }
-          ]
-        }
+        "labels": [
+          "Show All",
+          "Africa",
+          "Asia",
+          "Europe",
+          "North America",
+          "Oceania",
+          "South America"
+        ],
+        "name": "Continent Selection: "
+      }
+    }
+  ],
+  "mark": "bar",
+  "encoding": {
+    "x": {
+      "field": "country",
+      "type": "nominal",
+      "title": "Country (Sorted by Internet Usage Rate)",
+      "sort": { "field": "internetuserate", "order": "descending" }
+    },
+    "y": {
+      "field": "value",
+      "type": "quantitative",
+      "title": "Total Energy (TWh)"
+    },
+    "color": {
+      "field": "key",
+      "type": "nominal",
+      "scale": {
+        "domain": [
+          "hydro_energy",
+          "biofuel_energy",
+          "solar_energy",
+          "geothermal_energy",
+          "other_energy"
+        ]
+      },
+      "title": "Energy Type"
+    },
+    "opacity": {
+      "condition": { "param": "energy_highlight", "value": 1 },
+      "value": 0.2
+    },
+    "tooltip": [
+      { "field": "country", "title": "Country", "type": "nominal" },
+      {
+        "field": "internetuserate",
+        "title": "Internet Users (per 100 people)",
+        "type": "quantitative",
+        "format": ","
       },
       {
-        "mark": {
-          "type": "text",
-          "align": "right",
-          "baseline": "middle",
-          "dx": -12,
-          "fontSize": 11.5,
-          "fontStyle": "italic"
-        },
-        "encoding": {
-          "text": { "field": "country", "type": "nominal" },
-          "color": { "value": "black" },
-          "opacity": {
-            "condition": {
-              "test": "datum['country'] == 'Netherlands' || datum['country'] == 'Qatar' || datum['country'] == 'Iceland' || datum['country'] == 'Luxembourg' || datum['country'] == 'Norway' || datum['country'] == 'Japan' || datum['country'] == 'New Zealand' || datum['country'] == 'Finland' || datum['country'] == 'France' || datum['country'] == 'Switzerland'",
-              "value": 1
-            },
-            "value": 0
-          },
-          "tooltip": [
-            { "field": "continent", "title": "Continent", "type": "nominal" },
-            { "field": "country", "title": "Country", "type": "nominal" },
-            {
-              "field": "incomeperperson",
-              "title": "Income (per person)",
-              "type": "quantitative",
-              "format": ","
-            },
-            {
-              "field": "internetuserate",
-              "title": "Internet Users (per 100 people)",
-              "type": "quantitative",
-              "format": ","
-            },
-            {
-              "field": "urbanrate",
-              "title": "Urban Rate",
-              "type": "quantitative",
-              "format": ","
-            }
-          ]
-        }
+        "field": "total_energy",
+        "title": "Total Energy (TWh)",
+        "type": "quantitative",
+        "format": ","
+      },
+      {
+        "field": "hydro_energy",
+        "title": "Hydro Energy (TWh)",
+        "type": "quantitative",
+        "format": ","
+      },
+      {
+        "field": "biofuel_energy",
+        "title": "Biofuel Energy (TWh)",
+        "type": "quantitative",
+        "format": ","
+      },
+      {
+        "field": "solar_energy",
+        "title": "Solar Energy (TWh)",
+        "type": "quantitative",
+        "format": ","
+      },
+      {
+        "field": "geothermal_energy",
+        "title": "Geothermal Energy (TWh)",
+        "type": "quantitative",
+        "format": ","
+      },
+      {
+        "field": "other_energy",
+        "title": "Other Energy (TWh)",
+        "type": "quantitative",
+        "format": ","
       }
     ]
   }
-  
+}

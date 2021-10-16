@@ -106,7 +106,7 @@
           "title": "Continent"
         },
         "opacity": {
-          "condition": { "param": "continent_highlight", "value": 0.6 },
+          "condition": { "param": "continent_highlight", "value": 1 },
           "value": 0.2
         },
         "size": {
