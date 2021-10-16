@@ -1,0 +1,74 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Global Internet Usage Rate per 100",
+  "width": 800,
+  "height": 600,
+  "data": {
+    "url": "https://raw.githubusercontent.com/edbagas/data-visualisation-2/main/data/custom.geo%20(3)%20(1).json",
+    "format": { "type": "topojson", "feature": "custom.geo (3)" }
+  },
+  "transform": [
+    {
+      "lookup": "properties.name",
+      "from": {
+        "data": {
+          "url": "https://raw.githubusercontent.com/edbagas/data-visualisation-2/main/data/gapminder_internet.csv"
+        },
+        "key": "country",
+        "fields": ["internetuserate"]
+      }
+    },
+    {
+      "calculate": "datum.internetuserate",
+      "as": "Internet Usage Rate per 100"
+    }
+  ],
+  "params": [
+    {
+      "name": "zoom_level",
+      "value": "150",
+      "bind": {
+        "input": "range",
+        "min": 100,
+        "max": 500,
+        "step": 1,
+        "name": "Zoom: "
+      }
+    }
+  ],
+  "projection": {
+    "type": "equirectangular",
+    "scale": { "expr": "zoom_level" }
+  },
+  "layer": [
+    {
+      "transform": [
+        {
+          "calculate": "'Data is not available in ' + datum.properties.NAME",
+          "as": "note"
+        }
+      ],
+      "mark": { "type": "geoshape", "fill": "lightgray", "stroke": "white" },
+      "encoding": {
+        "tooltip": {
+          "field": "note"
+        }
+      }
+    },
+    {
+      "mark": { "type": "geoshape" },
+      "encoding": {
+        "color": {
+          "field": "Internet Usage Rate per 100",
+          "type": "quantitative",
+          "scale": { "type": "band" }
+        },
+        "tooltip": [
+          { "field": "properties.name", "type": "nominal", "title": "Country" },
+          { "field": "Internet Usage Rate per 100", "type": "quantitative" }
+        ]
+      }
+    }
+  ],
+  "config": {}
+}
