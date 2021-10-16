@@ -27,7 +27,7 @@
         "type": "quantitative"
       },
       "opacity": {
-        "condition": { "param": "continent_highlight", "value": 1 },
+        "condition": { "param": "continent_highlight", "value": 0.6 },
         "value": 0.2
       },
       "color": { "field": "continent" },
