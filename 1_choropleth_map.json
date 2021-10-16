@@ -1,7 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": "Global Internet Usage Rate per 100",
-  "width": 800,
+  "width": 850,
   "height": 600,
   "data": {
     "url": "https://raw.githubusercontent.com/edbagas/data-visualisation-2/main/data/custom.geo%20(3)%20(1).json",
