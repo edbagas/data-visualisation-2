@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Multiple Visualisations | An Example</title>
+    <title>Global Internet Users Rate</title>
     <!-- Import Vega & Vega-Lite (does not have to be from CDN) -->
     <script src="https://cdn.jsdelivr.net/npm/vega@5.20.2"></script>
     <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0"></script>
@@ -29,19 +29,23 @@
   <body style="background-color: #e6e6e6">
     <div class="page">
       <div class="pure-g">
-        <h1 style="margin:auto" font-size="70px">Global Internet Users Rate</h1>
+        <h1 style="margin: auto" font-size="70px">
+          Global Internet Users Rate
+        </h1>
       </div>
 
       <div>
-          <p>The internet has become an integral part of today's world. As of January 2021, there are 4.66 billion active internet users, 59.5 percent of the global population. With every countries, we take a deep look into how some factors (average income, population, overall happiness, GDP, energy consumption) affect the rate of internet users around the world.</p>
-      </div>
-
-      <br>
-
-      <hr class="hr3" />
-
-      <div>
-          <h2>Global Internet Users Rate per 100</h2>
+        <p>
+          The internet has become an integral part of today's world. As of
+          January 2021, there are
+          <strong
+            >4.66 billion active internet users, 59.5 percent of the global
+            population.</strong
+          >
+          With every countries, we take a deep look into how some factors
+          (average income, population, overall happiness, GDP, energy
+          consumption) affect the rate of internet users around the world.
+        </p>
       </div>
 
       <!-- <h2>Example 1: Overview+Detail</h2> -->
@@ -53,7 +57,18 @@
       </div>
 
       <div>
-          <p>The map above shows how the internet users rate differ with each country, normalised per 100 people. The darker colors represent a higher internet users rate, while the darker color represents a lower internet users rate. From this map, we can see that Europe and North America has the highest rate of internet users, while Africa has the lowest.</p>
+        <p>
+          The map above shows how the Internet Users Rate differ with each
+          country, normalised per 100 people. The
+          <strong style="color: #2c7da0">darker colors</strong> represent a
+          higher internet users rate, while the
+          <strong style="color: #a9d6e5">lighter colors</strong>
+          <strong></strong> a lower internet users rate. From this map, we can
+          see that <strong style="color: #a2cdcd">Europe</strong> generally has
+          the highest rate of internet users, while
+          <strong style="color: #ffc898">Africa</strong> generally has the
+          lowest.
+        </p>
       </div>
 
       <!-- end pure grid group -->
@@ -68,9 +83,7 @@
       <!-- pure grid group -->
 
       <div>
-        <h2>
-            Internet Users Rate vs. Average Income in USD
-        </h2>
+        <h2>How does Income affect Internet Users Rate?</h2>
       </div>
 
       <div class="pure-g">
@@ -78,10 +91,34 @@
           <div id="vis2" class="vis-container"></div>
         </div>
       </div>
+
+      <div>
+        <p>
+          The plot above shows the relationship between the average income in a
+          country and the internet users rate. We can see that it has a positive
+          correlation, meaning that a country's
+          <strong
+            >internet users rate generally increases if the average income
+            increases.</strong
+          >
+        </p>
+        <p>
+          We can also see that our previous statement was correct, that
+          <strong style="color: #a2cdcd">Europe</strong> generally has a high
+          internet users rate while
+          <strong style="color: #ffc898">Africa</strong> generally has a low
+          internet usage rate.
+        </p>
+      </div>
+
       <!-- end pure grid group -->
       <br />
 
       <hr class="hr3" />
+
+      <div>
+        <h2>How does other factors affect Internet Users Rate?</h2>
+      </div>
 
       <!-- <h2>Example 3: Zoomable Choropleth map with a time slider</h2> -->
       <!-- pure grid group -->
@@ -91,9 +128,43 @@
         </div>
       </div>
       <!-- end pure grid group -->
+
+      <div>
+        <p>
+          The plots above show how Population, Happiness, and Gross Domestic
+          Product (GDP) affect the Internet Users Rate. Since the internet users
+          rate is scaled,
+          <strong>we do not see any relationship with Population.</strong>
+        </p>
+
+        <p>
+          With Happiness, we can see that there is a strong positive
+          correlation. This means that generally
+          <strong
+            >as Happiness increases, the Internet Users Rate generally increases
+            too.</strong
+          >
+        </p>
+
+        <p>
+          The GDP of a country is generally used to describe the economics of a
+          country. Comparing GDP and the Internet Users Rate, the GDP does not
+          seem to have any strong relationship with the Internet Users Rate,
+          meaning that
+          <strong
+            >GDP does not have not an effect towards the Internet Users
+            Rate.</strong
+          >
+        </p>
+      </div>
+
       <br />
 
       <hr class="hr3" />
+
+      <div>
+        <h2>Top 20 Countries with the Highest Energy Usage</h2>
+      </div>
 
       <!-- <h2>Example 4: Choropleth map in small multiples</h2> -->
       <!-- pure grid group -->
@@ -103,9 +174,28 @@
         </div>
       </div>
       <!-- end pure grid group -->
-      <br>
+
+      <div>
+        <p>
+          The map above shows the Total Energy Usage of the highest 20
+          countries. The
+          <strong style="color: #6d6875">darker colors</strong> represent a
+          higher Total Energy Usage, while the
+          <strong style="color: #ffb4a2">lighter colors</strong>
+          <strong></strong> represent a lower Total Energy Usage. From this map,
+          we can see that
+          <strong style="color: #cab8ff">China</strong> generally has the
+          highest Total Energy Usage.
+        </p>
+      </div>
+
+      <br />
 
       <hr class="hr3" />
+
+      <div>
+        <h2>More internet users means more energy usage, right?</h2>
+      </div>
 
       <!-- <h2>Example 4: Choropleth map in small multiples</h2> -->
       <!-- pure grid group -->
@@ -115,7 +205,26 @@
         </div>
       </div>
       <!-- end pure grid group -->
-      <br>
+
+      <div>
+        <p>
+          The chart above shows the breakdown of each country's energy usage,
+          and is sorted by the highest to the lowest Internet Usage Rate (left
+          to right)
+        </p>
+        <p>
+          From this, we can see how it turns out how the
+          <strong
+            >Total Energy Usage does NOT have a relationship with the Internet
+            Usage Rate.</strong
+          >
+          This is quite a surprise, since we would have assumed that the more
+          internet users there are, the more technological advanced a country is
+          and hence would increase the Total Energy Usage.
+        </p>
+      </div>
+
+      <br />
 
       <hr class="hr3" />
 

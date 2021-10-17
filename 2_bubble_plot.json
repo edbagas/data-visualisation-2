@@ -1,7 +1,8 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": 700,
+  "width": 750,
   "height": 400,
+  "background": "#e6e6e6",
   "title": "Global Internet Usage Rate per 100 people",
   "data": {
     "url": "https://raw.githubusercontent.com/edbagas/data-visualisation-2/main/data/internet_population_happiness_gdp.csv"
@@ -45,33 +46,33 @@
     },
     {
       "name": "income_above",
-      "value": 0,
+      "value": 1,
       "bind": {
         "input": "range",
         "min": 1,
-        "max": 80000,
+        "max": 52300,
         "step": 1000,
         "name": "Minimum Income: "
       }
     },
     {
       "name": "internet_above",
-      "value": 0,
+      "value": 1,
       "bind": {
         "input": "range",
         "min": 1,
-        "max": 100,
+        "max": 95,
         "step": 1,
         "name": "Minimum Internet Users: "
       }
     },
     {
       "name": "urbanrate_above",
-      "value": 0,
+      "value": 1,
       "bind": {
         "input": "range",
         "min": 1,
-        "max": 100,
+        "max": 99,
         "step": 1,
         "name": "Minimum Urban Rate: "
       }
@@ -103,7 +104,26 @@
         "color": {
           "field": "continent",
           "type": "nominal",
-          "title": "Continent"
+          "title": "Continent",
+          "scale": {
+            "type": "threshold",
+            "domain": [
+              "Africa",
+              "Asia",
+              "Europe",
+              "North America",
+              "South America",
+              "Oceania"
+            ],
+            "range": [
+              "#FFC898",
+              "#CAB8FF",
+              "#A2CDCD",
+              "#D57E7E",
+              "#BCCC9A",
+              "#6B7AA1"
+            ]
+          }
         },
         "opacity": {
           "condition": { "param": "continent_highlight", "value": 1 },
@@ -152,7 +172,7 @@
         "color": { "value": "black" },
         "opacity": {
           "condition": {
-            "test": "datum['country'] == 'Netherlands' || datum['country'] == 'Qatar' || datum['country'] == 'Iceland' || datum['country'] == 'Luxembourg' || datum['country'] == 'Norway' || datum['country'] == 'Japan' || datum['country'] == 'New Zealand' || datum['country'] == 'Finland' || datum['country'] == 'France' || datum['country'] == 'Switzerland'",
+            "test": "datum['country'] == 'Netherlands' || datum['country'] == 'Qatar' || datum['country'] == 'Iceland' || datum['country'] == 'Luxembourg' || datum['country'] == 'Norway' || datum['country'] == 'Japan' || datum['country'] == 'New Zealand' || datum['country'] == 'Finland' || datum['country'] == 'United Arab Emirates'",
             "value": 1
           },
           "value": 0

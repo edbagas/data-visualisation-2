@@ -1,20 +1,39 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 950,
+  "height": 400,
+  "background": "#e6e6e6",
   "data": {
     "url": "https://raw.githubusercontent.com/edbagas/data-visualisation-2/main/data/internet_energy.csv"
   },
   "transform": [
     {
       "calculate": "datum.nonrenewable_energy",
-      "as": "other_energy"
+      "as": "Other Energy"
+    },
+    {
+      "calculate": "datum.hydro_energy",
+      "as": "Hydro Energy"
+    },
+    {
+      "calculate": "datum.biofuel_energy",
+      "as": "Biofuel Energy"
+    },
+    {
+      "calculate": "datum.solar_energy",
+      "as": "Solar Energy"
+    },
+    {
+      "calculate": "datum.geothermal_energy",
+      "as": "Geothermal Energy"
     },
     {
       "fold": [
-        "hydro_energy",
-        "biofuel_energy",
-        "solar_energy",
-        "geothermal_energy",
-        "other_energy"
+        "Hydro Energy",
+        "Biofuel Energy",
+        "Solar Energy",
+        "Geothermal Energy",
+        "Other Energy"
       ]
     },
     {
@@ -71,14 +90,15 @@
       "type": "nominal",
       "scale": {
         "domain": [
-          "hydro_energy",
-          "biofuel_energy",
-          "solar_energy",
-          "geothermal_energy",
-          "other_energy"
-        ]
+          "Hydro Energy",
+          "Biofuel Energy",
+          "Solar Energy",
+          "Geothermal Energy",
+          "Other Energy"
+        ],
+        "range": ["#A2CDCD", "#BCCC9A", "#FFC898", "#D57E7E", "#CDBBA7"]
       },
-      "title": "Energy Type"
+      "title": "Energy Type (TWh)"
     },
     "opacity": {
       "condition": { "param": "energy_highlight", "value": 1 },
@@ -123,7 +143,7 @@
         "format": ","
       },
       {
-        "field": "other_energy",
+        "field": "Other Energy",
         "title": "Other Energy (TWh)",
         "type": "quantitative",
         "format": ","

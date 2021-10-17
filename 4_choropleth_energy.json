@@ -1,7 +1,8 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": 900,
-  "height": 600,
+  "width": 1000,
+  "height": 400,
+  "background": "#e6e6e6",
   "data": {
     "url": "https://raw.githubusercontent.com/edbagas/data-visualisation-2/main/data/custom.geo%20(3)%20(1).json",
     "format": { "type": "topojson", "feature": "custom.geo (3)" }
@@ -60,16 +61,15 @@
         "color": {
           "field": "Total Energy Usage",
           "type": "quantitative",
-          "scale": { "type": "band" }
+          "scale": {
+            "type": "threshold",
+            "domain": [50, 500, 1000],
+            "range": ["#ffb4a2", "#e5989b", "#b5838d", "#6d6875"]
+          }
         },
         "tooltip": [
           { "field": "properties.name", "type": "nominal", "title": "Country" },
-          { "field": "Total Energy Usage", "type": "quantitative" },
-          {
-            "field": "internetuserate",
-            "title": "Internet Users (per 100 people)",
-            "type": "quantitative"
-          }
+          { "field": "Total Energy Usage", "type": "quantitative" }
         ]
       }
     }

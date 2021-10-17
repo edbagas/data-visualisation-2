@@ -1,7 +1,8 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": 850,
+  "width": 1000,
   "height": 600,
+  "background": "#e6e6e6",
   "data": {
     "url": "https://raw.githubusercontent.com/edbagas/data-visualisation-2/main/data/custom.geo%20(3)%20(1).json",
     "format": { "type": "topojson", "feature": "custom.geo (3)" }
@@ -19,7 +20,7 @@
     },
     {
       "calculate": "datum.internetuserate",
-      "as": "Internet Usage Rate per 100"
+      "as": "Internet Users Rate per 100"
     }
   ],
   "params": [
@@ -58,13 +59,17 @@
       "mark": { "type": "geoshape" },
       "encoding": {
         "color": {
-          "field": "Internet Usage Rate per 100",
+          "field": "Internet Users Rate per 100",
           "type": "quantitative",
-          "scale": { "type": "band" }
+          "scale": {
+            "type": "threshold",
+            "domain": [20, 40, 60, 80],
+            "range": ["#a9d6e5", "#89c2d9", "#61a5c2", "#468faf", "#2c7da0"]
+          }
         },
         "tooltip": [
           { "field": "properties.name", "type": "nominal", "title": "Country" },
-          { "field": "Internet Usage Rate per 100", "type": "quantitative" }
+          { "field": "Internet Users Rate per 100", "type": "quantitative" }
         ]
       }
     }
